@@ -1,9 +1,12 @@
 import React from 'react';
 
-const CorrectLetters = () => {
-  const word = 'test';
-  const guessedLetters = ['t'];
+interface CorrectLettersProps {
+  guessed: string[];
+  answer: string;
+  reveal?: boolean;
+}
 
+const CorrectLetters = ({ guessed, answer, reveal = false }: CorrectLettersProps) => {
   return (
     <div
       style={{
@@ -15,7 +18,7 @@ const CorrectLetters = () => {
         fontFamily: 'monospace',
       }}
     >
-      {word.split('').map((letter, idx) => (
+      {answer.split('').map((letter, idx) => (
         <span
           key={idx}
           style={{
@@ -24,7 +27,8 @@ const CorrectLetters = () => {
         >
           <span
             style={{
-              visibility: guessedLetters.includes(letter) ? 'visible' : 'hidden',
+              visibility: guessed.includes(letter) || reveal ? 'visible' : 'hidden',
+              color: !guessed.includes(letter) && reveal ? 'red' : 'black',
             }}
           >
             {letter}
